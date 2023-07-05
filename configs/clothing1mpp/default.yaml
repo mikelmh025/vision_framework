@@ -1,0 +1,30 @@
+inherit_from: configs/default.yaml
+data: &data_default
+  root: '/media/otter/cloth1m/version1' # Root dir of the dataset that includes folders of images: Jacket, Shirt, etc.
+  full_label_json_path: '/media/otter/cloth1m/version1/labels_changeidx.json' # Json file that includes all the labels
+  split_path: '/media/otter/cloth1m/version1/labels/' # Dir includes to test_ids.pt, train_ids.pt, val_ids.pt
+  image_size: 256
+  dataset_name: "clothing1mpp"
+  num_classes: 10
+  label_types: ['Class'] # ['Class','Color','Material','Pattern'] 
+                         # You can load any label, just make sure to change to training loop
+
+train: &train
+  debug: False # True | False
+  num_workers: 16
+  loss_type: 'ce'
+  loop_type: 'default' # 'default','peer','drops'
+  epochs: 100
+  global_iteration: 999999999
+  batch_size: 32
+  imbalance_factor: 1 # 1 means no imbalance
+
+general:
+  save_root: './results/'
+  CUDA_VISIBLE_DEVICES: "-1" # -1: no limit, else limit the cuda device
+
+model: &model_default
+  name: "resnet50"
+
+test: &test_defaults
+  <<: *train

@@ -1,0 +1,27 @@
+inherit_from: configs/default.yaml
+train: &train
+  loss_type: 'ce'
+  loop_type: 'drops' # 'default','peer','drops'
+  epochs: 100
+  global_iteration: 50000
+  drops: 
+    re_weight_type: 'prior'
+    is_upsampling: False
+    metric_base: 'uniform'
+    eps: 0.9                # perturbation for dro metric
+    eta_g: 0.01             # step size for eg updates of eta_g
+    eta_lambda: 0.01        # step size for eg updates of eta_lambda 
+    gamma: 0.5              # gamma-parameter for focal/ldam(C)
+    beta: 0.9999            # beta-parameter for cb
+    s: 1                    # s-parameter for scaling logits of ldam
+    tau: 1.0                # constant for logit adjust term
+    weight_type: 'ce'       # type of class-re-weight: 0_1/ce
+    dro_div: 'kl'           # div_type for dro metric: kl/l2/l1
+    g_type: 'not-eg'        # simplied version or EG style, is eg or not
+    n_it_update: 1000          # frequency of g, lambda updates (Debug 1, cifar10 1000)
+
+test: &test_defaults
+  <<: *train
+
+general:
+  CUDA_VISIBLE_DEVICES: "-1"

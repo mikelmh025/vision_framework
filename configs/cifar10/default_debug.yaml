@@ -1,0 +1,10 @@
+inherit_from: configs/default.yaml
+train: &train
+  debug: True # True | False
+  num_workers: 1
+
+general:
+  CUDA_VISIBLE_DEVICES: "0"
+
+test: &test_defaults
+  <<: *train

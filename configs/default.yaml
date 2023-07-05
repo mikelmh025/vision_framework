@@ -1,0 +1,48 @@
+data: &data_default
+  train_dir: "./datasets"
+  test_dir: "./datasets"
+
+  dataset_name: "cifar10"
+  num_classes: 10
+  image_size: 32
+
+
+
+train: &train_defaults
+  train_on_full: False
+  train_size: 0.9 # 0.9 means 90%, 45000 means sample. 
+  learning_rate: 0.01
+  scheduler_type: step
+  scheduler_gamma: 0.1
+  scheduler_step_size: 30
+  batch_size: 128
+  epochs: 100
+  global_iteration: -1
+  loss_type: 'ce' # ce, drops
+  optimizer_type: 'sgd'
+  loop_type: 'default' # 'default','peer','drops'
+  print_every: 100
+  debug: False # True | False
+  num_workers: 16
+  imbalance_factor: 0.1
+  imbalance_is_upsampling: False
+  eval_freq: 1000
+  resume_train: False #_loss_drops_1686182592_971b51 #False
+  
+  
+general:
+  save_root: './results'
+  # train_lock: False           # Create lock file to prevent multiple runs on the same thing
+  # whip_existing_files: True # Whip exisitng files
+  torch_seed: 1335
+  np_seed: 1335
+  CUDA_VISIBLE_DEVICES: "-1" # -1: no limit, else limit the cuda device
+
+
+  
+test: &test_defaults
+  <<: *train_defaults
+
+
+model: &model_default
+  name: "resnet18"
